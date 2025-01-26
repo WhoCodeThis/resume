@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Метаинформация -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Dmytro Ivanov</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: #fff;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Всё в центре */
+        }
+
+        /* Центральный блок (Имя, иконки, контакты, кнопка языка) */
+        .header-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Имя */
+        .header-center h1 {
+            font-size: 2em;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Блок соцсетей (иконки) */
+        .social-icons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-icon {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: #ff6600;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .social-icon:hover {
+            background-color: #e65c00;
+        }
+
+        .social-icon img {
+            width: 22px;
+            height: 22px;
+        }
+
+        /* Контактная информация (под иконками) */
+        .contact-info p {
+            margin: 0;
+            font-size: 1em;
+            color: #333;
+        }
+
+        .contact-info strong {
+            font-weight: bold;
+        }
+
+        .email-link {
+            color: #ff6600;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .email-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Кнопка выбора языка */
+        .language-toggle-button {
+            background-color: #ff6600;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.9em;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .language-toggle-button:hover {
+            background-color: #e65c00;
+        }
+
+        /* Панель выбора языка (с анимацией slideDown) */
+        .language-selection {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .language-selection.open {
+            display: flex;
+            animation: slideDown 0.5s forwards;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .language-option {
+            background-color: transparent;
+            color: #333;
+            border: 2px solid #ff6600;
+            padding: 6px 12px;
+            font-size: 0.9em;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            text-align: center;
+        }
+
+        .language-option:hover {
+            background-color: #ff6600;
+            color: #fff;
+        }
+
+        /* Section Styles */
+        section {
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s forwards;
+        }
+
+        section:nth-child(even) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #333;
+            position: relative;
+            display: inline-block;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+        }
+
+        section h2::after {
+            content: '';
+            width: 50px;
+            height: 5px;
+            background-color: #ff6600;
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .content-block {
+            flex: 1 1 300px;
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-block:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .content-block::before {
+            content: '';
+            position: absolute;
+            top: -75px;
+            right: -75px;
+            width: 150px;
+            height: 150px;
+            background-color: #ff6600;
+            border-radius: 50%;
+            opacity: 0.1;
+            transition: all 0.5s ease;
+        }
+
+        .content-block:hover::before {
+            top: -50px;
+            right: -50px;
+            opacity: 0.2;
+        }
+
+        .content-block h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #ff6600;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .content-block p,
+        .content-block ul {
+            font-size: 1em;
+            color: #555;
+        }
+
+        .content-block ul {
+            list-style: disc inside;
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        .content-block ul li {
+            margin-bottom: 10px;
+        }
+
+        .content-block ul li::marker {
+            color: #ff6600;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            margin-top: 50px;
+        }
+
+        footer p {
+            color: #fff;
+            font-size: 1em;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <div class="header-center">
+                <!-- Имя -->
+                <h1 data-key="Name">Dmytro Ivanov</h1>
+
+                <!-- Иконки GitHub / LinkedIn (под именем, до телефона и почты) -->
+                <div class="social-icons">
+                    <a href="https://github.com/whocodethis" target="_blank" class="social-icon" title="GitHub">
+                        <img src="https://img.icons8.com/ios-glyphs/30/github.png" alt="GitHub">
+                    </a>
+                    <a href="https://www.linkedin.com/in/whocodethis/" target="_blank" class="social-icon"
+                        title="LinkedIn">
+                        <img src="https://img.icons8.com/ios-filled/30/linkedin.png" alt="LinkedIn">
+                    </a>
+                </div>
+
+                <!-- Контакты (телефон, почта) -->
+                <div class="contact-info">
+                    <p>
+                        <strong data-key="Phone Number:">Phone Number:</strong>
+                        <span>+48 883-002-456</span>
+                    </p>
+                    <p>
+                        <strong data-key="Email:">Email:</strong>
+                        <a href="mailto:dmytro.ivanov.it@gmail.com" class="email-link" target="_blank"
+                            data-key="emailText">
+                            dmytro.ivanov.it@gmail.com
+                        </a>
+                    </p>
+                </div>
+
+                <!-- Кнопка переключения языков -->
+                <button id="language-toggle-button" class="language-toggle-button">Language: English</button>
+
+                <!-- Выпадающий селектор языков -->
+                <div id="language-selection" class="language-selection">
+                    <button class="language-option" id="btn-en">English</button>
+                    <button class="language-option" id="btn-pl">Polski</button>
+                    <button class="language-option" id="btn-ru">Русский</button>
+                    <button class="language-option" id="btn-uk">Українська</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Summary Section (бывший Profile) -->
+        <section class="summary">
+            <h2 data-key="Summary">Summary</h2>
+            <div class="content-wrapper">
+                <div class="content-block">
+                    <p data-key="MotivationText">
+                        Mobile Applications Engineer by education, with a solid foundation in system administration,
+                        networking, database management, and helpdesk support. Combines strong technical skills with
+                        extensive experience collaborating with clients and guiding teams to achieve optimal results.
+                        Currently seeking an opportunity that will foster continued professional growth and provide
+                        valuable, engaging challenges in a forward-thinking organization.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section (UPDATED) -->
+        <section class="experience">
+            <h2 data-key="Experience">Experience</h2>
+            <div class="content-wrapper">
+                <div class="content-block">
+                    <h3 data-key="System Administrator">System Administrator</h3>
+                    <p class="company" data-key="Vega Telecom, (2018.06 - 2018.09)">Vega Telecom, (2018.06 - 2018.09)
+                    </p>
+                    <ul>
+                        <li data-key="Admin1">Administration and configuration of CISCO networking systems (setup,
+                            troubleshooting, and optimization)</li>
+                        <li data-key="Admin2">Management and maintenance of Linux and Windows servers</li>
+                        <li data-key="Admin3">Python scripting for process automation</li>
+                        <li data-key="Admin4">Implementation and management of security protocols (firewalls, VPNs, and
+                            SSL/TLS)</li>
+                        <li data-key="Admin5">Active Directory administration</li>
+                        <li data-key="Admin6">Providing Helpdesk and technical support</li>
+                        <li data-key="Admin7">Database administration and management (monitoring, backups, and
+                            performance tuning)</li>
+                    </ul>
+                </div>
+                <div class="content-block">
+                    <h3 data-key="First-Line Sales Manager">First-Line Sales Manager</h3>
+                    <p class="company" data-key="Skyeng, (2021.02 - 2021.11)">Skyeng, (2021.02 - 2021.11)</p>
+                    <ul>
+                        <li data-key="Sales1">Initiated first contact with clients, identified their needs, and built
+                            strong relationships</li>
+                        <li data-key="Sales2">Presented Skyeng’s educational products and managed the entire sales
+                            process</li>
+                        <li data-key="Sales3">Improved customer experience by developing strategies to enhance retention
+                            and loyalty</li>
+                        <li data-key="Sales4">Optimized internal sales processes to boost efficiency and team
+                            performance</li>
+                        <li data-key="Sales5">Maintained detailed CRM records for future analysis and engagement</li>
+                        <li data-key="Sales6">Created and refined sales scripts to maximize performance and streamline
+                            communication</li>
+                        <li data-key="Sales7">Achieved sales targets and consistently met key performance indicators
+                            (KPIs)</li>
+                        <li data-key="Sales8">Provided technical support and assistance during transaction finalization
+                        </li>
+                    </ul>
+                </div>
+                <div class="content-block">
+                    <h3 data-key="Bar-Manager">Bar-Manager</h3>
+                    <p class="company" data-key="The Club (Wrocław), (2021.07 - 2024.05)">The Club (Wrocław), (2021.07 -
+                        2024.05)</p>
+                    <ul>
+                        <li data-key="Bar1">Creating and implementing innovative sales strategies; conducting daily
+                            quick team briefings</li>
+                        <li data-key="Bar2">Effectively resolving conflicts, fostering a friendly and welcoming
+                            atmosphere for all guests</li>
+                        <li data-key="Bar3">Developing new cocktail recipes, designing menus, and optimizing workflow
+                            based on quarterly sales analysis</li>
+                        <li data-key="Bar4">Training and supervising bar staff to maintain high service standards</li>
+                        <li data-key="Bar5">Managing POS systems and handling payment transactions</li>
+                        <li data-key="Bar6">Increasing the average order value through upselling and cross-selling
+                            techniques, boosting overall bar sales</li>
+                        <li data-key="Bar7">Conducting weekly inventory checks, ensuring product quality and
+                            availability, and coordinating timely stock replenishment</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills, Courses, and Languages Section (UPDATED) -->
+        <section class="skills-courses-languages">
+            <h2 data-key="Skills, Courses, and Languages">Skills, Courses, and Languages</h2>
+            <div class="content-wrapper">
+                <div class="content-block">
+                    <h3 data-key="Soft Skills">Soft Skills</h3>
+                    <ul>
+                        <li data-key="SoftSkill1">Adaptability under pressure and stress-resilience</li>
+                        <li data-key="SoftSkill2">Strong interpersonal and communication skills</li>
+                        <li data-key="SoftSkill3">Team leadership and motivation</li>
+                        <li data-key="SoftSkill4">Quick and effective decision-making</li>
+                        <li data-key="SoftSkill5">Problem-solving and conflict resolution</li>
+                    </ul>
+                </div>
+                <div class="content-block">
+                    <h3 data-key="IT Hard Skills">IT Hard Skills</h3>
+                    <ul>
+                        <li data-key="ITHardSkill1">Windows/Linux OS administration</li>
+                        <li data-key="ITHardSkill2">Python, Java, JavaScript and Dart(Flutter)</li>
+                        <li data-key="ITHardSkill3">SQL and NoSQL Database design and administration</li>
+                        <li data-key="ITHardSkill4">Git, GitLab CI/CD</li>
+                        <li data-key="ITHardSkill5">Docker and Virtualization technologies</li>
+                        <li data-key="ITHardSkill6">System security and network protocols: TCP/IP, SSL/TLS, HTTPS, VPN,
+                            Firewall</li>
+                        <li data-key="ITHardSkill7">Pentesting, traffic analysis, and basic QA</li>
+                        <li data-key="ITHardSkill8">Helpdesk and technical support</li>
+                        <li data-key="ITHardSkill9">CISCO network setup and configuration</li>
+                    </ul>
+                </div>
+                <div class="content-block">
+                    <h3 data-key="Manager Hard Skills">Manager Hard Skills</h3>
+                    <ul>
+                        <li data-key="ManagerHardSkill1">Strategic sales planning and execution</li>
+                        <li data-key="ManagerHardSkill2">CRM systems expertise (client data analysis and process
+                            management)</li>
+                        <li data-key="ManagerHardSkill3">Financial performance monitoring and KPI tracking</li>
+                        <li data-key="ManagerHardSkill4">Staff training, mentoring, and team supervision</li>
+                        <li data-key="ManagerHardSkill5">Workflow and process optimization</li>
+                    </ul>
+                </div>
+                <div class="content-block">
+                    <h3 data-key="Courses">Courses</h3>
+                    <ul>
+                        <li data-key="Course1">Linux OS administration (2018.04)</li>
+                        <li data-key="Course2">CISCO CCNA (2018.07)</li>
+                        <li data-key="Course3">Python (2018.11)</li>
+                        <li data-key="Course4">Java (2019.01)</li>
+                        <li data-key="Course5">Upsell and cross-sell (2021.05)</li>
+                        <li data-key="Course6">Team Management (2021.09)</li>
+                    </ul>
+                </div>
+                <div class="content-block">
+                    <h3 data-key="Languages">Languages</h3>
+                    <ul>
+                        <li data-key="Language1">English – B2+</li>
+                        <li data-key="Language2">Polish – B2+</li>
+                        <li data-key="Language3">Russian – Native</li>
+                        <li data-key="Language4">Ukrainian – Native</li>
+                        <li data-key="Language5">Spanish - just started</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section class="education">
+            <h2 data-key="Education">Education</h2>
+            <div class="content-wrapper">
+                <div class="content-block">
+                    <h3 data-key="Physical-Mathematical Lyceum">Physical-Mathematical Lyceum</h3>
+                    <p data-key="Secondary Education (2016.09 – 2020.06)">Secondary Education (2016.09 – 2020.06)</p>
+                </div>
+                <div class="content-block">
+                    <h3 data-key="WSB Merito University">WSB Merito University</h3>
+                    <p data-key="Engineer, Computer Science (2020.10 – Present)">Engineer, Computer Science (2020.10 –
+                        Present)</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p data-key="FooterText">
+            I agree to the processing of personal data provided in this document for realising the recruitment process
+            pursuant to the Personal Data Protection Act of 10 May 2018 (Journal of Laws 2018, item 1000) and in
+            agreement
+            with Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the
+            protection
+            of natural persons with regard to the processing of personal data and on the free movement of such data, and
+            repealing Directive 95/46/EC (General Data Protection Regulation).
+        </p>
+    </footer>
+
+    <script>
+        /* 
+           Обновленный словарь переводов (en, pl, ru, uk), 
+           включающий новые/изменённые ключи и тексты.
+        */
+        const translations = {
+            en: {
+                "Name": "Dmytro Ivanov",
+                "Phone Number:": "Phone Number:",
+                "Email:": "Email:",
+                "emailText": "dmytro.ivanov.it@gmail.com",
+                "Summary": "Summary",
+                "MotivationText": "Mobile Applications Engineer by education, with a solid foundation in system administration, networking, database management, and helpdesk support. Combines strong technical skills with extensive experience collaborating with clients and guiding teams to achieve optimal results. Currently seeking an opportunity that will foster continued professional growth and provide valuable, engaging challenges in a forward-thinking organization.",
+                "Experience": "Experience",
+                "System Administrator": "System Administrator",
+                "Admin1": "Administration and configuration of CISCO networking systems (setup, troubleshooting, and optimization)",
+                "Admin2": "Management and maintenance of Linux and Windows servers",
+                "Admin3": "Python scripting for process automation",
+                "Admin4": "Implementation and management of security protocols (firewalls, VPNs, and SSL/TLS)",
+                "Admin5": "Active Directory administration",
+                "Admin6": "Providing Helpdesk and technical support",
+                "Admin7": "Database administration and management (monitoring, backups, and performance tuning)",
+
+                "First-Line Sales Manager": "First-Line Sales Manager",
+                "Sales1": "Initiated first contact with clients, identified their needs, and built strong relationships",
+                "Sales2": "Presented Skyeng’s educational products and managed the entire sales process",
+                "Sales3": "Improved customer experience by developing strategies to enhance retention and loyalty",
+                "Sales4": "Optimized internal sales processes to boost efficiency and team performance",
+                "Sales5": "Maintained detailed CRM records for future analysis and engagement",
+                "Sales6": "Created and refined sales scripts to maximize performance and streamline communication",
+                "Sales7": "Achieved sales targets and consistently met key performance indicators (KPIs)",
+                "Sales8": "Provided technical support and assistance during transaction finalization",
+
+                "Bar-Manager": "Bar-Manager",
+                "Bar1": "Creating and implementing innovative sales strategies; conducting daily quick team briefings",
+                "Bar2": "Effectively resolving conflicts, fostering a friendly and welcoming atmosphere for all guests",
+                "Bar3": "Developing new cocktail recipes, designing menus, and optimizing workflow based on quarterly sales analysis",
+                "Bar4": "Training and supervising bar staff to maintain high service standards",
+                "Bar5": "Managing POS systems and handling payment transactions",
+                "Bar6": "Increasing the average order value through upselling and cross-selling techniques, boosting overall bar sales",
+                "Bar7": "Conducting weekly inventory checks, ensuring product quality and availability, and coordinating timely stock replenishment",
+
+                "Skills, Courses, and Languages": "Skills, Courses, and Languages",
+
+                "Soft Skills": "Soft Skills",
+                "SoftSkill1": "Adaptability under pressure and stress-resilience",
+                "SoftSkill2": "Strong interpersonal and communication skills",
+                "SoftSkill3": "Team leadership and motivation",
+                "SoftSkill4": "Quick and effective decision-making",
+                "SoftSkill5": "Problem-solving and conflict resolution",
+
+                "IT Hard Skills": "IT Hard Skills",
+                "ITHardSkill1": "Windows/Linux OS administration",
+                "ITHardSkill2": "Python, Java, JavaScript and Dart(Flutter)",
+                "ITHardSkill3": "SQL and NoSQL Database design and administration",
+                "ITHardSkill4": "Git, GitLab CI/CD",
+                "ITHardSkill5": "Docker and Virtualization technologies",
+                "ITHardSkill6": "System security and network protocols: TCP/IP, SSL/TLS, HTTPS, VPN, Firewall",
+                "ITHardSkill7": "Pentesting, traffic analysis, and basic QA",
+                "ITHardSkill8": "Helpdesk and technical support",
+                "ITHardSkill9": "CISCO network setup and configuration",
+
+                "Manager Hard Skills": "Manager Hard Skills",
+                "ManagerHardSkill1": "Strategic sales planning and execution",
+                "ManagerHardSkill2": "CRM systems expertise (client data analysis and process management)",
+                "ManagerHardSkill3": "Financial performance monitoring and KPI tracking",
+                "ManagerHardSkill4": "Staff training, mentoring, and team supervision",
+                "ManagerHardSkill5": "Workflow and process optimization",
+
+                "Courses": "Courses",
+                "Course1": "Linux OS administration (2018.04)",
+                "Course2": "CISCO CCNA (2018.07)",
+                "Course3": "Python (2018.11)",
+                "Course4": "Java (2019.01)",
+                "Course5": "Upsell and cross-sell (2021.05)",
+                "Course6": "Team Management (2021.09)",
+
+                "Languages": "Languages",
+                "Language1": "English – B2+",
+                "Language2": "Polish – B2+",
+                "Language3": "Russian – Native",
+                "Language4": "Ukrainian – Native",
+                "Language5": "Spanish - just started",
+
+                "Education": "Education",
+                "Physical-Mathematical Lyceum": "Physical-Mathematical Lyceum",
+                "Secondary Education (2016.09 – 2020.06)": "Secondary Education (2016.09 – 2020.06)",
+                "WSB Merito University": "WSB Merito University",
+                "Engineer, Computer Science (2020.10 – Present)": "Engineer, Computer Science (2020.10 – Present)",
+
+                "FooterText": "I agree to the processing of personal data provided in this document for realising the recruitment process pursuant to the Personal Data Protection Act of 10 May 2018 (Journal of Laws 2018, item 1000) and in agreement with Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC (General Data Protection Regulation)."
+            },
+            pl: {
+                "Name": "Dmytro Ivanov",
+                "Phone Number:": "Numer Telefonu:",
+                "Email:": "Email:",
+                "emailText": "dmytro.ivanov.it@gmail.com",
+                "Summary": "Podsumowanie",
+                "MotivationText": "Inżynier aplikacji mobilnych z wykształcenia, z solidnymi podstawami w administracji systemowej, sieciach, zarządzaniu bazami danych i wsparciu helpdesk. Łączy silne umiejętności techniczne z bogatym doświadczeniem w pracy z klientami i zarządzaniu zespołami w celu osiągania optymalnych wyników. Obecnie poszukuje możliwości, które pozwolą na dalszy rozwój zawodowy i zapewnią cenne, inspirujące wyzwania w nowoczesnej organizacji.",
+                "Experience": "Doświadczenie",
+                "System Administrator": "Administrator Systemów",
+                "Admin1": "Administracja i konfiguracja sieciowych systemów CISCO (ustawienia, rozwiązywanie problemów i optymalizacja)",
+                "Admin2": "Zarządzanie i utrzymanie serwerów Linux i Windows",
+                "Admin3": "Tworzenie skryptów w Pythonie w celu automatyzacji procesów",
+                "Admin4": "Wdrażanie i zarządzanie protokołami bezpieczeństwa (zapory sieciowe, VPN i SSL/TLS)",
+                "Admin5": "Administracja Active Directory",
+                "Admin6": "Zapewnianie pomocy technicznej (Helpdesk) i wsparcia technicznego",
+                "Admin7": "Administracja i zarządzanie bazami danych (monitorowanie, kopie zapasowe i optymalizacja wydajności)",
+
+                "First-Line Sales Manager": "Menedżer Sprzedaży Pierwszej Linii",
+                "Sales1": "Nawiązywanie pierwszego kontaktu z klientami, identyfikacja ich potrzeb i budowanie silnych relacji",
+                "Sales2": "Prezentowanie edukacyjnych produktów Skyeng i zarządzanie całym procesem sprzedaży",
+                "Sales3": "Poprawa doświadczeń klienta poprzez opracowywanie strategii zwiększających retencję i lojalność",
+                "Sales4": "Optymalizacja wewnętrznych procesów sprzedaży w celu zwiększenia efektywności i wydajności zespołu",
+                "Sales5": "Utrzymywanie szczegółowych zapisów w CRM w celu przyszłej analizy i zaangażowania",
+                "Sales6": "Tworzenie i udoskonalanie skryptów sprzedażowych, aby maksymalizować wyniki i usprawniać komunikację",
+                "Sales7": "Osiąganie celów sprzedażowych i stałe realizowanie kluczowych wskaźników wydajności (KPI)",
+                "Sales8": "Zapewnianie wsparcia technicznego i pomocy podczas finalizacji transakcji",
+
+                "Bar-Manager": "Bar-Manager",
+                "Bar1": "Tworzenie i wdrażanie innowacyjnych strategii sprzedażowych; przeprowadzanie codziennych szybkich odpraw zespołu",
+                "Bar2": "Skuteczne rozwiązywanie konfliktów, tworzenie przyjaznej i gościnnej atmosfery dla wszystkich gości",
+                "Bar3": "Opracowywanie nowych przepisów na koktajle, projektowanie menu oraz optymalizacja procesów w oparciu o kwartalną analizę sprzedaży",
+                "Bar4": "Szkolenie i nadzorowanie personelu baru w celu utrzymania wysokich standardów obsługi",
+                "Bar5": "Zarządzanie systemami POS i obsługa transakcji płatniczych",
+                "Bar6": "Zwiększanie wartości średniego zamówienia poprzez techniki upsellingu i cross-sellingu, co przekłada się na wyższe ogólne wyniki sprzedaży baru",
+                "Bar7": "Przeprowadzanie cotygodniowych inwentaryzacji, zapewnienie jakości i dostępności produktów oraz koordynacja terminowego uzupełniania zapasów",
+
+                "Skills, Courses, and Languages": "Umiejętności, Kursy i Języki",
+
+                "Soft Skills": "Umiejętności miękkie",
+                "SoftSkill1": "Umiejętność adaptacji pod presją i odporność na stres",
+                "SoftSkill2": "Silne umiejętności interpersonalne i komunikacyjne",
+                "SoftSkill3": "Przywództwo w zespole i motywowanie innych",
+                "SoftSkill4": "Szybkie i skuteczne podejmowanie decyzji",
+                "SoftSkill5": "Rozwiązywanie problemów i konfliktów",
+
+                "IT Hard Skills": "Umiejętności Techniczne IT",
+                "ITHardSkill1": "Administracja systemami Windows/Linux",
+                "ITHardSkill2": "Python, Java, JavaScript i Dart(Flutter)",
+                "ITHardSkill3": "Projektowanie i administracja bazami danych SQL i NoSQL",
+                "ITHardSkill4": "Git, GitLab CI/CD",
+                "ITHardSkill5": "Docker i technologie wirtualizacji",
+                "ITHardSkill6": "Bezpieczeństwo systemów i protokoły sieciowe: TCP/IP, SSL/TLS, HTTPS, VPN, Firewall",
+                "ITHardSkill7": "Pentesting, analiza ruchu i podstawy QA",
+                "ITHardSkill8": "Helpdesk i wsparcie techniczne",
+                "ITHardSkill9": "Konfiguracja i ustawienia sieci CISCO",
+
+                "Manager Hard Skills": "Umiejętności Menedżerskie",
+                "ManagerHardSkill1": "Strategiczne planowanie i realizacja sprzedaży",
+                "ManagerHardSkill2": "Zaawansowana znajomość systemów CRM (analiza danych klientów i zarządzanie procesami)",
+                "ManagerHardSkill3": "Monitorowanie wyników finansowych i śledzenie KPI",
+                "ManagerHardSkill4": "Szkolenie pracowników, mentoring i nadzór nad zespołem",
+                "ManagerHardSkill5": "Optymalizacja przepływu pracy i procesów",
+
+                "Courses": "Kursy",
+                "Course1": "Administracja systemem Linux (2018.04)",
+                "Course2": "CISCO CCNA (2018.07)",
+                "Course3": "Python (2018.11)",
+                "Course4": "Java (2019.01)",
+                "Course5": "Upsell i cross-sell (2021.05)",
+                "Course6": "Zarządzanie zespołem (2021.09)",
+
+                "Languages": "Języki",
+                "Language1": "Angielski – B2+",
+                "Language2": "Polski – B2+",
+                "Language3": "Rosyjski – Ojczysty",
+                "Language4": "Ukraiński – Ojczysty",
+                "Language5": "Hiszpański - dopiero zacząłem",
+
+                "Education": "Wykształcenie",
+                "Physical-Mathematical Lyceum": "Fizyczno-Matematyczne Liceum",
+                "Secondary Education (2016.09 – 2020.06)": "Edukacja Średnia (2016.09 – 2020.06)",
+                "WSB Merito University": "WSB Merito University",
+                "Engineer, Computer Science (2020.10 – Present)": "Inżynier, Informatyka (2020.10 – Obecnie)",
+
+                "FooterText": "Wyrażam zgodę na przetwarzanie moich danych osobowych w celu rekrutacji..."
+            },
+            ru: {
+                "Name": "Дмитрий Иванов",
+                "Phone Number:": "Номер телефона:",
+                "Email:": "Email:",
+                "emailText": "dmytro.ivanov.it@gmail.com",
+                "Summary": "Краткое описание",
+                "MotivationText": "Инженер мобильных приложений по образованию, с прочной базой в системном администрировании, сетях, управлении базами данных и техподдержке. Объединяет сильные технические навыки с большим опытом взаимодействия с клиентами и управления командами для достижения оптимальных результатов. В настоящее время ищет возможность для дальнейшего профессионального роста и получения ценного, интересного опыта в современной организации.",
+                "Experience": "Опыт работы",
+                "System Administrator": "Системный администратор",
+                "Admin1": "Администрирование и конфигурирование сетевых систем CISCO (настройка, устранение неполадок и оптимизация)",
+                "Admin2": "Управление и обслуживание серверов Linux и Windows",
+                "Admin3": "Написание скриптов на Python для автоматизации процессов",
+                "Admin4": "Внедрение и управление протоколами безопасности (фаерволы, VPN и SSL/TLS)",
+                "Admin5": "Администрирование Active Directory",
+                "Admin6": "Предоставление Helpdesk и технической поддержки",
+                "Admin7": "Администрирование и управление базами данных (мониторинг, резервное копирование и оптимизация производительности)",
+
+                "First-Line Sales Manager": "Менеджер по продажам первой линии",
+                "Sales1": "Установление первичного контакта с клиентами, определение их потребностей и построение прочных отношений",
+                "Sales2": "Презентация образовательных продуктов Skyeng и управление всем процессом продаж",
+                "Sales3": "Улучшение клиентского опыта путем разработки стратегий для повышения удержания и лояльности",
+                "Sales4": "Оптимизация внутренних процессов продаж для повышения эффективности и работы команды",
+                "Sales5": "Ведение подробных записей в CRM для дальнейшего анализа и взаимодействия",
+                "Sales6": "Создание и совершенствование скриптов продаж для максимизации результатов и упрощения коммуникации",
+                "Sales7": "Достижение целей по продажам и постоянное выполнение ключевых показателей (KPI)",
+                "Sales8": "Предоставление технической поддержки и помощи при завершении транзакции",
+
+                "Bar-Manager": "Менеджер бара",
+                "Bar1": "Разработка и внедрение инновационных стратегий продаж; проведение ежедневных коротких совещаний команды",
+                "Bar2": "Эффективное разрешение конфликтов, создание дружелюбной и гостеприимной атмосферы для всех гостей",
+                "Bar3": "Разработка новых рецептов коктейлей, составление меню и оптимизация рабочих процессов на основе ежеквартального анализа продаж",
+                "Bar4": "Обучение и контроль работы персонала бара для поддержания высоких стандартов обслуживания",
+                "Bar5": "Управление системами POS и проведение платежных транзакций",
+                "Bar6": "Увеличение среднего чека за счет методов upselling и cross-selling, что повышает общий объем продаж бара",
+                "Bar7": "Проведение еженедельной инвентаризации, контроль качества и наличия продуктов, а также координация своевременного пополнения запасов",
+
+                "Skills, Courses, and Languages": "Навыки, Курсы и Языки",
+
+                "Soft Skills": "Гибкие навыки",
+                "SoftSkill1": "Адаптивность под давлением и стрессоустойчивость",
+                "SoftSkill2": "Сильные межличностные и коммуникативные навыки",
+                "SoftSkill3": "Лидерство в команде и мотивация",
+                "SoftSkill4": "Быстрое и эффективное принятие решений",
+                "SoftSkill5": "Решение проблем и конфликтов",
+
+                "IT Hard Skills": "Технические навыки IT",
+                "ITHardSkill1": "Администрирование ОС Windows/Linux",
+                "ITHardSkill2": "Python, Java, JavaScript и Dart(Flutter)",
+                "ITHardSkill3": "Проектирование и администрирование баз данных SQL и NoSQL",
+                "ITHardSkill4": "Git, GitLab CI/CD",
+                "ITHardSkill5": "Docker и технологии виртуализации",
+                "ITHardSkill6": "Безопасность систем и сетевые протоколы: TCP/IP, SSL/TLS, HTTPS, VPN, Firewall",
+                "ITHardSkill7": "Пентестинг, анализ трафика и базовые навыки QA",
+                "ITHardSkill8": "Helpdesk и техническая поддержка",
+                "ITHardSkill9": "Настройка и конфигурирование сетей CISCO",
+
+                "Manager Hard Skills": "Навыки менеджера",
+                "ManagerHardSkill1": "Стратегическое планирование и реализация продаж",
+                "ManagerHardSkill2": "Экспертиза в CRM-системах (анализ данных клиентов и управление процессами)",
+                "ManagerHardSkill3": "Мониторинг финансовых показателей и отслеживание KPI",
+                "ManagerHardSkill4": "Обучение персонала, наставничество и контроль команды",
+                "ManagerHardSkill5": "Оптимизация рабочих процессов и процедур",
+
+                "Courses": "Курсы",
+                "Course1": "Администрирование Linux (2018.04)",
+                "Course2": "CISCO CCNA (2018.07)",
+                "Course3": "Python (2018.11)",
+                "Course4": "Java (2019.01)",
+                "Course5": "Upsell и cross-sell (2021.05)",
+                "Course6": "Управление командой (2021.09)",
+
+                "Languages": "Языки",
+                "Language1": "Английский – B2+",
+                "Language2": "Польский – B2+",
+                "Language3": "Русский – Родной",
+                "Language4": "Украинский – Родной",
+                "Language5": "Испанский - только начал",
+
+                "Education": "Образование",
+                "Physical-Mathematical Lyceum": "Физико-математический лицей",
+                "Secondary Education (2016.09 – 2020.06)": "Среднее образование (2016.09 – 2020.06)",
+                "WSB Merito University": "Университет WSB Merito",
+                "Engineer, Computer Science (2020.10 – Present)": "Инженер, Компьютерные науки (2020.10 – настоящее время)",
+
+                "FooterText": "Я согласен на обработку моих персональных данных..."
+            },
+            uk: {
+                "Name": "Дмитро Іванов",
+                "Phone Number:": "Номер телефону:",
+                "Email:": "Email:",
+                "emailText": "dmytro.ivanov.it@gmail.com",
+                "Summary": "Короткий опис",
+                "MotivationText": "Інженер мобільних додатків за освітою, з міцною базою в системному адмініструванні, мережах, управлінні базами даних і технічній підтримці. Поєднує сильні технічні навички з великим досвідом співпраці з клієнтами та керування командами для досягнення оптимальних результатів. Наразі шукає можливість для подальшого професійного зростання та отримання цінного, цікавого досвіду в сучасній організації.",
+                "Experience": "Досвід роботи",
+                "System Administrator": "Системний адміністратор",
+                "Admin1": "Адміністрування та налаштування мережевих систем CISCO (конфігурація, усунення неполадок і оптимізація)",
+                "Admin2": "Керування та підтримка серверів Linux та Windows",
+                "Admin3": "Створення скриптів на Python для автоматизації процесів",
+                "Admin4": "Впровадження та управління протоколами безпеки (фаєрволи, VPN та SSL/TLS)",
+                "Admin5": "Адміністрування Active Directory",
+                "Admin6": "Надання Helpdesk та технічної підтримки",
+                "Admin7": "Адміністрування та управління базами даних (моніторинг, резервне копіювання та налаштування продуктивності)",
+
+                "First-Line Sales Manager": "Менеджер з продажу першої лінії",
+                "Sales1": "Встановлення першого контакту з клієнтами, визначення їхніх потреб і побудова міцних відносин",
+                "Sales2": "Презентація освітніх продуктів Skyeng і управління всім процесом продажу",
+                "Sales3": "Покращення клієнтського досвіду шляхом розробки стратегій для підвищення утримання та лояльності",
+                "Sales4": "Оптимізація внутрішніх процесів продажу для підвищення ефективності та продуктивності команди",
+                "Sales5": "Ведення детальної документації в CRM для подальшого аналізу та взаємодії",
+                "Sales6": "Створення та вдосконалення скриптів продажу для максимізації результатів і спрощення комунікації",
+                "Sales7": "Досягнення цілей продажу та постійне виконання ключових показників ефективності (KPI)",
+                "Sales8": "Забезпечення технічної підтримки та допомоги під час завершення транзакції",
+
+                "Bar-Manager": "Менеджер бару",
+                "Bar1": "Створення та впровадження інноваційних стратегій продажу; проведення щоденних коротких брифінгів для команди",
+                "Bar2": "Ефективне вирішення конфліктів, формування дружньої та гостинної атмосфери для всіх гостей",
+                "Bar3": "Розробка нових рецептів коктейлів, складання меню та оптимізація робочих процесів на основі щоквартального аналізу продажів",
+                "Bar4": "Навчання та нагляд за персоналом бару для підтримання високих стандартів обслуговування",
+                "Bar5": "Управління системами POS і обробка платіжних транзакцій",
+                "Bar6": "Збільшення середнього чека за допомогою технік upselling та cross-selling, що підвищує загальні обсяги продажів бару",
+                "Bar7": "Проведення щотижневих інвентаризацій, контроль якості та наявності продуктів, а також координація своєчасного поповнення запасів",
+
+                "Skills, Courses, and Languages": "Навички, Курси та Мови",
+
+                "Soft Skills": "Гнучкі навички",
+                "SoftSkill1": "Здатність адаптуватися під тиском та стресостійкість",
+                "SoftSkill2": "Сильні міжособистісні та комунікативні навички",
+                "SoftSkill3": "Лідерство в команді та мотивація",
+                "SoftSkill4": "Швидке і ефективне прийняття рішень",
+                "SoftSkill5": "Вирішення проблем і конфліктів",
+
+                "IT Hard Skills": "Технічні навички IT",
+                "ITHardSkill1": "Адміністрування ОС Windows/Linux",
+                "ITHardSkill2": "Python, Java, JavaScript та Dart(Flutter)",
+                "ITHardSkill3": "Проєктування та адміністрування баз даних SQL і NoSQL",
+                "ITHardSkill4": "Git, GitLab CI/CD",
+                "ITHardSkill5": "Docker та технології віртуалізації",
+                "ITHardSkill6": "Безпека систем і мережеві протоколи: TCP/IP, SSL/TLS, HTTPS, VPN, Firewall",
+                "ITHardSkill7": "Пентестинг, аналіз трафіку та базові навички QA",
+                "ITHardSkill8": "Helpdesk і технічна підтримка",
+                "ITHardSkill9": "Налаштування та конфігурування мереж CISCO",
+
+                "Manager Hard Skills": "Менеджерські навички",
+                "ManagerHardSkill1": "Стратегічне планування та реалізація продажів",
+                "ManagerHardSkill2": "Поглиблені знання CRM-систем (аналіз даних клієнтів та управління процесами)",
+                "ManagerHardSkill3": "Моніторинг фінансових показників і відстеження KPI",
+                "ManagerHardSkill4": "Навчання персоналу, наставництво та керівництво командою",
+                "ManagerHardSkill5": "Оптимізація робочих процесів та процедур",
+
+                "Courses": "Курси",
+                "Course1": "Адміністрування Linux (2018.04)",
+                "Course2": "CISCO CCNA (2018.07)",
+                "Course3": "Python (2018.11)",
+                "Course4": "Java (2019.01)",
+                "Course5": "Upsell та cross-sell (2021.05)",
+                "Course6": "Управління командою (2021.09)",
+
+                "Languages": "Мови",
+                "Language1": "Англійська – B2+",
+                "Language2": "Польська – B2+",
+                "Language3": "Російська – Рідна",
+                "Language4": "Українська – Рідна",
+                "Language5": "Іспанська - тільки почав",
+
+                "Education": "Освіта",
+                "Physical-Mathematical Lyceum": "Фізико-математичний ліцей",
+                "Secondary Education (2016.09 – 2020.06)": "Середня освіта (2016.09 – 2020.06)",
+                "WSB Merito University": "WSB Merito University",
+                "Engineer, Computer Science (2020.10 – Present)": "Інженер, Комп'ютерні науки (2020.10 – теперішній час)",
+
+                "FooterText": "Я погоджуюся на обробку моїх персональних даних..."
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        /* Функция смены языка */
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+            updateLanguageButton();
+        }
+
+        /* Обновляем текст на кнопке */
+        function updateLanguageButton() {
+            const langNames = {
+                en: 'English',
+                pl: 'Polski',
+                ru: 'Русский',
+                uk: 'Українська'
+            };
+            document.getElementById('language-toggle-button').innerText = 'Language: ' + langNames[currentLanguage];
+        }
+
+        /* Тоггл выбора языка */
+        document.getElementById('language-toggle-button').addEventListener('click', toggleLanguageSelection);
+        document.getElementById('btn-en').addEventListener('click', () => { setLanguage('en'); toggleLanguageSelection(); });
+        document.getElementById('btn-pl').addEventListener('click', () => { setLanguage('pl'); toggleLanguageSelection(); });
+        document.getElementById('btn-ru').addEventListener('click', () => { setLanguage('ru'); toggleLanguageSelection(); });
+        document.getElementById('btn-uk').addEventListener('click', () => { setLanguage('uk'); toggleLanguageSelection(); });
+
+        function toggleLanguageSelection() {
+            const panel = document.getElementById('language-selection');
+            panel.classList.toggle('open');
+        }
+    </script>
+</body>
+
+</html>
